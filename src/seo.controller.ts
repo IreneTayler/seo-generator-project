@@ -47,6 +47,28 @@ export class SeoController {
       });
     }
 
+    // Mock response when Flowise is not properly configured (for testing)
+    if (this.FLOWISE_URL.includes('your-chatflow-id-here')) {
+      this.logger.warn('Using mock response - Flowise not configured');
+      const processingTime = Date.now() - startTime;
+
+      return res.json({
+        title: `${body.product_name} - Premium ${body.category} for Modern Lifestyle`,
+        meta_description: `Discover the best ${body.product_name.toLowerCase()} in ${body.category.toLowerCase()}. ${body.keywords ? `Featuring ${body.keywords.split(',')[0]?.trim()}` : 'Premium quality'} with exceptional performance and style.`,
+        h1: `${body.product_name} - Advanced ${body.category}`,
+        description: `Experience the ultimate in ${body.category.toLowerCase()} with our ${body.product_name.toLowerCase()}. Designed for those who demand excellence, this product combines cutting-edge technology with superior craftsmanship. Whether you're a professional or enthusiast, our ${body.product_name.toLowerCase()} delivers unmatched performance and reliability that exceeds expectations.`,
+        bullets: [
+          `Premium ${body.category.toLowerCase()} design and construction`,
+          `Advanced features for enhanced user experience`,
+          `Durable materials built to last`,
+          `Easy setup and user-friendly interface`,
+          `Excellent customer support and warranty coverage`
+        ],
+        processing_time_ms: processingTime,
+        mock_response: true
+      });
+    }
+
     // Sanitize inputs
     const sanitizedData = {
       product_name: body.product_name.trim().slice(0, 100),

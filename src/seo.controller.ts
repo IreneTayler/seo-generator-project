@@ -4,26 +4,12 @@ import {
   Get,
   Body,
   Res,
-  HttpException,
   HttpStatus,
   Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
 import axios from 'axios';
-
-interface SeoRequest {
-  product_name: string;
-  category: string;
-  keywords?: string;
-}
-
-interface SeoResponse {
-  title: string;
-  meta_description: string;
-  h1: string;
-  description: string;
-  bullets: string[];
-}
+import { SeoRequest, SeoResponse } from './interfaces/seo.interface';
 
 @Controller('api')
 export class SeoController {
